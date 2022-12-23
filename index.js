@@ -342,9 +342,11 @@ function getParser_(bits, fp, signed, clamp) {
   }
   if (fp && bits === 16) {
     return new FloatParser(5, 11);
-  } else if (fp && bits == 32) {
+  } else if (fp && bits === 24) {
+    return new FloatParser(7, 17);
+  } else if (fp && bits === 32) {
     return new FloatParser(8, 23);
-  } else if(fp && bits == 64) {
+  } else if(fp && bits === 64) {
     return new FloatParser(11, 52);
   }
   return new IntParser(bits, signed, clamp);
@@ -364,7 +366,7 @@ const TYPE_ERR = 'Unsupported type';
  * @private
  */
 function validateFloatType(bits) {
-  if (!bits || bits !== 16 && bits !== 32 && bits !== 64) {
+  if (!bits || bits !== 16 && bits !== 24 && bits !== 32 && bits !== 64) {
     throw new Error(TYPE_ERR + ': float, bits: ' + bits);
   }
 }
